@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">CampusGrid system architecture</title>
+  <desc id="desc">A student uses a browser dashboard connected to a central Python coordinator. The coordinator validates and schedules approved jobs, then assigns leased tasks to independent worker processes. Workers execute allowlisted functions in bounded child processes and return results for aggregation.</desc>
+  <defs>
+    <linearGradient id="top" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10233f"/><stop offset="1" stop-color="#183a5c"/></linearGradient>
+    <linearGradient id="accent" x1="0" x2="1"><stop stop-color="#14b8a6"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#18324f" flood-opacity=".10"/></filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3977bb"/></marker>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0d9b91"/></marker>
+    <marker id="arrowSlate" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#72849c"/></marker>
+    <style>
+      text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#172b45}.title{font-size:38px;font-weight:750;letter-spacing:-.5px}.subtitle{font-size:17px;fill:#64758c}.section{font-size:12px;font-weight:750;letter-spacing:1.4px;fill:#54708f}.cardtitle{font-size:19px;font-weight:700}.body{font-size:14px;fill:#5a6e86}.small{font-size:12px;fill:#677b92}.micro{font-size:11px;fill:#71849a}.white{fill:#f7fbff}.mutedwhite{fill:#c5d5e8}.chip{font-size:12px;font-weight:650}
+    </style>
+  </defs>
+  <rect width="1600" height="980" fill="#f4f7fb"/>
+  <circle cx="1455" cy="66" r="215" fill="#e6f2fb" opacity=".65"/>
+  <circle cx="90" cy="875" r="170" fill="#e8f5f4" opacity=".7"/>
+
+  <text x="64" y="76" class="section">BIOS V2 · FRONTIER · PROBLEM STATEMENT 3</text>
+  <text x="64" y="127" class="title">CampusGrid — System Architecture</text>
+  <text x="64" y="160" class="subtitle">Voluntary compute sharing through a central coordinator and independently running worker processes</text>
+  <rect x="1302" y="72" width="235" height="42" rx="21" fill="#e4f5f2"/>
+  <circle cx="1326" cy="93" r="6" fill="#10a99b"/>
+  <text x="1342" y="98" class="chip" fill="#167c77">REAL DISTRIBUTED TASKS</text>
+
+  <!-- dashboard -->
+  <g filter="url(#shadow)">
+    <rect x="55" y="250" width="330" height="300" rx="20" fill="#fff" stroke="#dbe4ef" stroke-width="1.5"/>
+    <rect x="55" y="250" width="330" height="12" rx="6" fill="url(#accent)"/>
+  </g>
+  <rect x="82" y="283" width="52" height="52" rx="15" fill="#e8f5fb"/>
+  <path d="M94 296h28v22H94zM99 322h18M108 318v4" fill="none" stroke="#2778a9" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="151" y="305" class="section">CLIENT</text>
+  <text x="151" y="329" class="cardtitle">Student / Admin</text>
+  <text x="82" y="377" class="cardtitle">Browser dashboard</text>
+  <text x="82" y="407" class="body">Served by the coordinator</text>
+  <line x1="82" y1="429" x2="357" y2="429" stroke="#e6edf4"/>
+  <circle cx="91" cy="458" r="4" fill="#13a99c"/><text x="105" y="463" class="body">Submit approved jobs</text>
+  <circle cx="91" cy="490" r="4" fill="#13a99c"/><text x="105" y="495" class="body">View workers, tasks and results</text>
+  <rect x="82" y="514" width="124" height="23" rx="11.5" fill="#edf3fc"/><text x="95" y="530" class="micro">ADMIN TOKEN</text>
+
+  <!-- coordinator boundary -->
+  <rect x="500" y="190" width="570" height="535" rx="24" fill="#edf3f9" stroke="#aabbd0" stroke-width="2" stroke-dasharray="7 6"/>
+  <rect x="520" y="207" width="530" height="485" rx="19" fill="#142b49"/>
+  <text x="550" y="247" class="section mutedwhite">CENTRAL COORDINATOR · PYTHON HTTP SERVER</text>
+  <text x="550" y="278" class="white" font-size="23" font-weight="700">CampusGrid control plane</text>
+
+  <rect x="550" y="300" width="470" height="98" rx="13" fill="#fff"/>
+  <rect x="550" y="300" width="8" height="98" rx="4" fill="url(#accent)"/>
+  <text x="578" y="331" class="cardtitle">HTTP API + dashboard host</text>
+  <text x="578" y="356" class="body">Job validation · worker endpoints · live state</text>
+  <text x="578" y="380" class="small">Separate admin and worker bearer-token checks</text>
+
+  <rect x="550" y="416" width="225" height="92" rx="12" fill="#f7fafe"/>
+  <text x="570" y="447" class="cardtitle" font-size="16">Worker registry</text>
+  <text x="570" y="472" class="small">IDs · heartbeats · capacity</text>
+  <text x="570" y="491" class="small">Online / offline detection</text>
+  <rect x="795" y="416" width="225" height="92" rx="12" fill="#f7fafe"/>
+  <text x="815" y="447" class="cardtitle" font-size="16">Scheduler + queue</text>
+  <text x="815" y="472" class="small">Available task slots</text>
+  <text x="815" y="491" class="small">Unique task IDs · 15s leases</text>
+  <rect x="550" y="523" width="225" height="92" rx="12" fill="#f7fafe"/>
+  <text x="570" y="554" class="cardtitle" font-size="16">Job and task state</text>
+  <text x="570" y="579" class="small">Queued · running · completed</text>
+  <text x="570" y="598" class="small">In-memory for this prototype</text>
+  <rect x="795" y="523" width="225" height="92" rx="12" fill="#f7fafe"/>
+  <text x="815" y="554" class="cardtitle" font-size="16">Result aggregator</text>
+  <text x="815" y="579" class="small">Validates task ownership</text>
+  <text x="815" y="598" class="small">Combines partition results</text>
+  <text x="550" y="654" class="mutedwhite" font-size="13">Central orchestration · no database persistence</text>
+
+  <!-- browser API arrows -->
+  <path d="M385 350H488" fill="none" stroke="#3977bb" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="436" y="331" text-anchor="middle" class="micro">submit job</text>
+  <path d="M500 423H397" fill="none" stroke="#72849c" stroke-width="2.5" marker-end="url(#arrowSlate)"/>
+  <text x="447" y="446" text-anchor="middle" class="micro">live state</text>
+
+  <!-- worker process A -->
+  <g filter="url(#shadow)"><rect x="1190" y="220" width="350" height="205" rx="19" fill="#fff" stroke="#dbe4ef" stroke-width="1.5"/></g>
+  <rect x="1190" y="220" width="9" height="205" rx="4" fill="#19a99b"/>
+  <circle cx="1224" cy="254" r="16" fill="#e4f6f3"/><text x="1224" y="259" text-anchor="middle" class="chip" fill="#138d83">A</text>
+  <text x="1252" y="260" class="cardtitle">Worker process A</text>
+  <text x="1220" y="293" class="body">Python worker agent</text>
+  <rect x="1220" y="310" width="286" height="43" rx="9" fill="#edf8f7"/>
+  <text x="1234" y="337" class="small">Bounded child process + timeout</text>
+  <text x="1220" y="382" class="small">Allowlisted: Monte Carlo π · prime analysis</text>
+  <text x="1220" y="404" class="micro">No uploaded code or shell commands</text>
+
+  <!-- worker process B -->
+  <g filter="url(#shadow)"><rect x="1190" y="485" width="350" height="205" rx="19" fill="#fff" stroke="#dbe4ef" stroke-width="1.5"/></g>
+  <rect x="1190" y="485" width="9" height="205" rx="4" fill="#3977bb"/>
+  <circle cx="1224" cy="519" r="16" fill="#eaf1fc"/><text x="1224" y="524" text-anchor="middle" class="chip" fill="#326bb0">B</text>
+  <text x="1252" y="525" class="cardtitle">Worker process B</text>
+  <text x="1220" y="558" class="body">Python worker agent</text>
+  <rect x="1220" y="575" width="286" height="43" rx="9" fill="#edf3fc"/>
+  <text x="1234" y="602" class="small">Bounded child process + timeout</text>
+  <text x="1220" y="647" class="small">Executes its assigned partition locally</text>
+  <text x="1220" y="669" class="micro">Can be another process or another laptop</text>
+
+  <!-- coordinator-worker flows: assignment outbound -->
+  <path d="M1070 305H1177" fill="none" stroke="#3977bb" stroke-width="2.8" marker-end="url(#arrowBlue)"/>
+  <text x="1123" y="292" text-anchor="middle" class="micro">task lease</text>
+  <path d="M1190 365H1082" fill="none" stroke="#0d9b91" stroke-width="2.8" marker-end="url(#arrowTeal)"/>
+  <text x="1135" y="386" text-anchor="middle" class="micro">poll · heartbeat · result</text>
+  <path d="M1070 570H1177" fill="none" stroke="#3977bb" stroke-width="2.8" marker-end="url(#arrowBlue)"/>
+  <text x="1123" y="557" text-anchor="middle" class="micro">task lease</text>
+  <path d="M1190 630H1082" fill="none" stroke="#0d9b91" stroke-width="2.8" marker-end="url(#arrowTeal)"/>
+  <text x="1135" y="651" text-anchor="middle" class="micro">poll · heartbeat · result</text>
+  <text x="1127" y="700" text-anchor="middle" class="micro">WORKER TOKEN</text>
+
+  <!-- scope and security note -->
+  <rect x="55" y="785" width="1490" height="125" rx="18" fill="#fff" stroke="#dbe4ef" stroke-width="1.5"/>
+  <text x="85" y="820" class="section">PROTOTYPE BOUNDARIES</text>
+  <rect x="85" y="841" width="220" height="42" rx="10" fill="#edf3fc"/><text x="105" y="867" class="chip">Centralized scheduling</text>
+  <rect x="320" y="841" width="205" height="42" rx="10" fill="#edf3fc"/><text x="340" y="867" class="chip">HTTP · trusted LAN only</text>
+  <rect x="540" y="841" width="195" height="42" rx="10" fill="#edf3fc"/><text x="560" y="867" class="chip">No TLS in this MVP</text>
+  <rect x="750" y="841" width="240" height="42" rx="10" fill="#edf3fc"/><text x="770" y="867" class="chip">No hard RAM isolation</text>
+  <rect x="1005" y="841" width="245" height="42" rx="10" fill="#e7f6f2"/><text x="1025" y="867" class="chip" fill="#147d74">No arbitrary remote code</text>
+  <text x="1282" y="858" class="small">Local demo:</text><text x="1282" y="878" class="small">multi-process</text>
+  <text x="64" y="951" class="micro">CampusGrid · coordinator state is volatile · worker hardware figures are self-reported · no GPU workloads are implemented</text>
+</svg>
