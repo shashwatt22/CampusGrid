@@ -2,6 +2,12 @@
 
 **Turn idle campus computers into a shared computing resource.** CampusGrid is a voluntary coordinator-worker prototype for distributing allowlisted CPU jobs across independent Python processes and computers on a trusted private LAN.
 
+## Architecture
+
+![CampusGrid system architecture](docs/campusgrid-architecture.svg)
+
+The coordinator serves the dashboard and API, tracks worker registration and heartbeats, leases allowlisted task partitions to independent worker processes, and aggregates their results. Workers poll for work, execute bounded built-in computations, and return results over the trusted LAN.
+
 ## What works
 
 - Workers register a random generated ID, chosen display name, CPU count, available RAM estimate, task slots, heartbeat, and completed-task count. No hostname is collected by default.
